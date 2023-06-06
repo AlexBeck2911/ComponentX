@@ -10,16 +10,27 @@
           :checked="selectedValue === option.value"
           @click="handleRadioOptionClick(option.value)"
         />
-        <label :for="option.value">
+        <label
+          :for="option.value"
+          :style="{
+            padding: radioPadding,
+          }"
+        >
           <span>
             <template v-if="option.icon != '' && option.icon != null">
-              <db-icon :icon="option.icon"></db-icon>
+              <db-icon :icon="option.icon" :variant="iconVariant"></db-icon>
 
               <span class="tool-tip">{{ option.description }}</span>
             </template>
 
             <template v-else>
-              <span>{{ option.description }}</span>
+              <span
+                :style="{
+                  fontSize: fontSize,
+                }"
+              >
+                {{ option.description }}
+              </span>
             </template>
           </span>
         </label>
@@ -34,14 +45,22 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "radio-component",
   components: { DbIcon: DbIcon },
-  props: ["radioOptions", "callback"],
+  props: ["radioOptions", "callback", "size"],
 
   data() {
     return {
       radioOptions: this.radioOptions,
       selectedValue: "",
       callback: this.callback,
+      size: this.size || "medium",
+      radioPadding: "",
+      iconVariant: "",
+      fontSize: "",
     };
+  },
+
+  created() {
+    this.getSizes();
   },
 
   methods: {
@@ -49,6 +68,21 @@ export default defineComponent({
       this.selectedValue = value;
       if (this.callback) {
         this.callback(value);
+      }
+    },
+    getSizes() {
+      if (this.size === "small") {
+        this.radioPadding = "4px 8px";
+        this.iconVariant = "20-outline";
+        this.fontSize = "14px";
+      } else if (this.size === "large") {
+        this.radioPadding = "12px 24px";
+        this.iconVariant = "32-outline";
+        this.fontSize = "22px";
+      } else {
+        this.radioPadding = "8px 16px"; // medium
+        this.iconVariant = "24-outline";
+        this.fontSize = "18px";
       }
     },
   },
@@ -78,7 +112,6 @@ export default defineComponent({
 
 .radio-button-group .radio-button label {
   display: inline-block;
-  padding: 8px 16px;
   background-color: transparent;
   cursor: pointer;
   border: 1px solid #ccc;

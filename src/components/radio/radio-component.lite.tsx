@@ -1,18 +1,49 @@
-import { For, Show, useStore, useStyle } from "@builder.io/mitosis";
+import { For, onInit, Show, useStore, useStyle } from "@builder.io/mitosis";
 
 export default function RadioComponent(props: any) {
+  // Verwendung des useStore-Hooks, um den Zustand zu initialisieren
   const state = useStore({
+    // Übernahme der Props in den Zustand
     radioOptions: props.radioOptions,
     selectedValue: "",
     callback: props.callback,
+    size: props.size || "medium",
+    radioPadding: "",
+    iconVariant: "",
+    fontSize: "",
+    // Funktion zum Behandeln des Klicks auf eine Radio-Option
     handleRadioOptionClick(value: string) {
       state.selectedValue = value;
+      // Aufruf des Callbacks, wenn vorhanden
       if (state.callback) {
         state.callback(value);
       }
     },
+    // Funktion zum Ermitteln der Größenabhängigen Werte
+    getSizes() {
+      if (state.size === "small") {
+        state.radioPadding = "4px 8px";
+        state.iconVariant = "20-outline";
+        state.fontSize = "14px";
+      } else if (state.size === "large") {
+        state.radioPadding = "12px 24px";
+        state.iconVariant = "32-outline";
+        state.fontSize = "22px";
+      } else {
+        state.radioPadding = "8px 16px"; // medium
+        state.iconVariant = "24-outline";
+        state.fontSize = "18px";
+      }
+    },
   });
 
+  // onInit-Hook, der aufgerufen wird, wenn die Komponente initialisiert wird
+  onInit(() => {
+    // Ermittlung der Größenabhängigen Werte beim Initialisieren
+    state.getSizes();
+  });
+
+  // Verwendung des useStyle-Hooks, um Stile einzufügen
   useStyle(`
   .radio-button-group {
     display: flex;
@@ -36,7 +67,6 @@ export default function RadioComponent(props: any) {
   
   .radio-button-group .radio-button label {
     display: inline-block;
-    padding: 8px 16px;
     background-color: transparent;
     cursor: pointer;
     border: 1px solid #ccc;
@@ -86,9 +116,11 @@ export default function RadioComponent(props: any) {
 
   return (
     <div className="radio-button-group">
+      {/* Iteration über die Radio-Optionen */}
       <For each={state.radioOptions[0].options}>
         {(option: any) => (
           <div className="radio-button">
+            {/* Radio-Button-Element */}
             <input
               type="radio"
               name={option.value}
@@ -97,13 +129,30 @@ export default function RadioComponent(props: any) {
               checked={state.selectedValue === option.value}
               onClick={() => state.handleRadioOptionClick(option.value)}
             />
-            <label htmlFor={option.value}>
+            {/* Label für den Radio-Button */}
+            <label
+              htmlFor={option.value}
+              style={{
+                padding: state.radioPadding,
+              }}
+            >
               <span>
+                {/* Show-Komponente zur bedingten Anzeige */}
                 <Show
                   when={option.icon != "" && option.icon != null}
-                  else={<span>{option.description}</span>}
+                  else={
+                    // Anzeige, wenn kein Icon vorhanden ist
+                    <span style={{ fontSize: state.fontSize }}>
+                      {option.description}
+                    </span>
+                  }
                 >
-                  <DbIcon icon={option.icon}></DbIcon>
+                  {/* DB-Icon-Komponente */}
+                  <DbIcon
+                    icon={option.icon}
+                    variant={state.iconVariant}
+                  ></DbIcon>
+                  {/* Tooltip für das Icon */}
                   <span className={"tool-tip"}>{option.description}</span>
                 </Show>
               </span>

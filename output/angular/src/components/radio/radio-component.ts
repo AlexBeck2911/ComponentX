@@ -18,10 +18,15 @@ import { Component, Input } from "@angular/core";
             (click)="handleRadioOptionClick(option.value)"
           />
 
-          <label [attr.for]="option.value">
+          <label
+            [attr.for]="option.value"
+            [ngStyle]="{
+          padding: radioPadding
+        }"
+          >
             <span>
               <ng-container *ngIf='option.icon != "" && option.icon != null'>
-                <DbIcon [icon]="option.icon"></DbIcon>
+                <DbIcon [icon]="option.icon" [variant]="iconVariant"></DbIcon>
 
                 <span class="tool-tip">{{option.description}}</span>
               </ng-container>
@@ -55,7 +60,6 @@ import { Component, Input } from "@angular/core";
 
       .radio-button-group .radio-button label {
         display: inline-block;
-        padding: 8px 16px;
         background-color: transparent;
         cursor: pointer;
         border: 1px solid #ccc;
@@ -106,15 +110,39 @@ import { Component, Input } from "@angular/core";
 export class RadioComponent {
   @Input() radioOptions: any;
   @Input() callback: any;
+  @Input() size: any;
 
   radioOptions = this.radioOptions;
   selectedValue = "";
   callback = this.callback;
+  size = this.size || "medium";
+  radioPadding = "";
+  iconVariant = "";
+  fontSize = "";
   handleRadioOptionClick(value: string) {
     this.selectedValue = value;
     if (this.callback) {
       this.callback(value);
     }
+  }
+  getSizes() {
+    if (this.size === "small") {
+      this.radioPadding = "4px 8px";
+      this.iconVariant = "20-outline";
+      this.fontSize = "14px";
+    } else if (this.size === "large") {
+      this.radioPadding = "12px 24px";
+      this.iconVariant = "32-outline";
+      this.fontSize = "22px";
+    } else {
+      this.radioPadding = "8px 16px"; // medium
+      this.iconVariant = "24-outline";
+      this.fontSize = "18px";
+    }
+  }
+
+  constructor() {
+    this.getSizes();
   }
 }
 

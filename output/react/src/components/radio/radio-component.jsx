@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { useLocalObservable, observer } from "mobx-react-lite";
 
 function RadioComponent(props) {
@@ -6,13 +7,36 @@ function RadioComponent(props) {
     radioOptions: props.radioOptions,
     selectedValue: "",
     callback: props.callback,
+    size: props.size || "medium",
+    radioPadding: "",
+    iconVariant: "",
+    fontSize: "",
     handleRadioOptionClick(value) {
       state.selectedValue = value;
       if (state.callback) {
         state.callback(value);
       }
     },
+    getSizes() {
+      if (state.size === "small") {
+        state.radioPadding = "4px 8px";
+        state.iconVariant = "20-outline";
+        state.fontSize = "14px";
+      } else if (state.size === "large") {
+        state.radioPadding = "12px 24px";
+        state.iconVariant = "32-outline";
+        state.fontSize = "22px";
+      } else {
+        state.radioPadding = "8px 16px"; // medium
+        state.iconVariant = "24-outline";
+        state.fontSize = "18px";
+      }
+    },
   }));
+
+  useEffect(() => {
+    state.getSizes();
+  }, []);
 
   return (
     <>
@@ -28,15 +52,28 @@ function RadioComponent(props) {
               onClick={(event) => state.handleRadioOptionClick(option.value)}
             />
 
-            <label htmlFor={option.value}>
+            <label
+              htmlFor={option.value}
+              style={{
+                padding: state.radioPadding,
+              }}
+            >
               <span>
                 {option.icon != "" && option.icon != null ? (
                   <>
-                    <DbIcon icon={option.icon} />
+                    <DbIcon icon={option.icon} variant={state.iconVariant} />
                     <span className="tool-tip">{option.description}</span>
                   </>
                 ) : (
-                  <span>{option.description}</span>
+                  <>
+                    <span
+                      style={{
+                        fontSize: state.fontSize,
+                      }}
+                    >
+                      {option.description}
+                    </span>
+                  </>
                 )}
               </span>
             </label>
@@ -66,7 +103,6 @@ function RadioComponent(props) {
 
         .radio-button-group .radio-button label {
           display: inline-block;
-          padding: 8px 16px;
           background-color: transparent;
           cursor: pointer;
           border: 1px solid #ccc;

@@ -4,15 +4,12 @@ import { useLocalObservable, observer } from "mobx-react-lite";
 function RadioComponent(props) {
   const state = useLocalObservable(() => ({
     radioOptions: props.radioOptions,
-    radioIcons: props.radioIcons,
-    radioDescriptions: props.radioDescriptions,
     selectedValue: "",
     callback: props.callback,
-    handleRadioOptionClick(radioOption, value) {
-      console.log("Test");
+    handleRadioOptionClick(value) {
       state.selectedValue = value;
       if (state.callback) {
-        state.callback(radioOption, value);
+        state.callback(value);
       }
     },
   }));
@@ -20,35 +17,29 @@ function RadioComponent(props) {
   return (
     <>
       <div className="radio-button-group">
-        {state.radioOptions?.map((optionGroup) => (
-          <div key={optionGroup.groupName}>
-            <h3>{optionGroup.groupName}</h3>
+        {state.radioOptions[0].options?.map((option) => (
+          <div className="radio-button">
+            <input
+              type="radio"
+              name={option.value}
+              value={option.value}
+              id={option.value}
+              checked={state.selectedValue === option.value}
+              onClick={(event) => state.handleRadioOptionClick(option.value)}
+            />
 
-            {optionGroup.options?.map((option) => (
-              <div className="radio-button">
-                <input
-                  type="radio"
-                  name={optionGroup.groupName}
-                  value={option.value}
-                  id={option.value}
-                  checked={state.selectedValue === option.value}
-                  onClick={(event) =>
-                    state.handleRadioOptionClick(
-                      optionGroup.groupName,
-                      option.value
-                    )
-                  }
-                />
-
-                <label htmlFor={option.value}>
-                  <span>
-                    <DbIcon icon={state.radioIcons[option.value]} />
-
-                    {option.label}
-                  </span>
-                </label>
-              </div>
-            ))}
+            <label htmlFor={option.value}>
+              <span>
+                {option.icon != "" && option.icon != null ? (
+                  <>
+                    <DbIcon icon={option.icon} />
+                    <span className="tool-tip">{option.description}</span>
+                  </>
+                ) : (
+                  <span>{option.description}</span>
+                )}
+              </span>
+            </label>
           </div>
         ))}
       </div>
@@ -79,6 +70,7 @@ function RadioComponent(props) {
           background-color: transparent;
           cursor: pointer;
           border: 1px solid #ccc;
+          position: relative;
         }
 
         .radio-button-group .radio-button:not(:first-of-type) label {
@@ -99,6 +91,25 @@ function RadioComponent(props) {
 
         .radio-button-group input[type="radio"]:hover + label {
           background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        .tool-tip {
+          background-color: rgba(97, 97, 97, 0.92);
+          border-radius: 4px;
+          color: rgb(255, 255, 255);
+          visibility: hidden;
+          position: absolute;
+          z-index: 1;
+          font-size: 12px;
+          padding: 4px 8px;
+          left: 50%;
+          transform: translateX(-50%);
+          top: -30px;
+          font-weight: 500;
+        }
+
+        .radio-button-group .radio-button label:hover .tool-tip {
+          visibility: visible;
         }
       `}</style>
     </>

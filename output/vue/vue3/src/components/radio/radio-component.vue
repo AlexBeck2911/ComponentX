@@ -1,31 +1,28 @@
 <template>
   <div class="radio-button-group">
-    <template
-      :key="optionGroup.groupName"
-      v-for="(optionGroup, index) in radioOptions"
-    >
-      <div>
-        <h3>{{ optionGroup.groupName }}</h3>
-        <template :key="index" v-for="(option, index) in optionGroup.options">
-          <div class="radio-button">
-            <input
-              type="radio"
-              :name="optionGroup.groupName"
-              :value="option.value"
-              :id="option.value"
-              :checked="selectedValue === option.value"
-              @click="
-                handleRadioOptionClick(optionGroup.groupName, option.value)
-              "
-            />
-            <label :for="option.value">
-              <span>
-                <db-icon :icon="radioIcons[option.value]"></db-icon>
-                {{ option.label }}
-              </span>
-            </label>
-          </div>
-        </template>
+    <template :key="index" v-for="(option, index) in radioOptions[0].options">
+      <div class="radio-button">
+        <input
+          type="radio"
+          :name="option.value"
+          :value="option.value"
+          :id="option.value"
+          :checked="selectedValue === option.value"
+          @click="handleRadioOptionClick(option.value)"
+        />
+        <label :for="option.value">
+          <span>
+            <template v-if="option.icon != '' && option.icon != null">
+              <db-icon :icon="option.icon"></db-icon>
+
+              <span class="tool-tip">{{ option.description }}</span>
+            </template>
+
+            <template v-else>
+              <span>{{ option.description }}</span>
+            </template>
+          </span>
+        </label>
       </div>
     </template>
   </div>
@@ -37,24 +34,21 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "radio-component",
   components: { DbIcon: DbIcon },
-  props: ["radioOptions", "radioIcons", "radioDescriptions", "callback"],
+  props: ["radioOptions", "callback"],
 
   data() {
     return {
       radioOptions: this.radioOptions,
-      radioIcons: this.radioIcons,
-      radioDescriptions: this.radioDescriptions,
       selectedValue: "",
       callback: this.callback,
     };
   },
 
   methods: {
-    handleRadioOptionClick(radioOption, value) {
-      console.log("Test");
+    handleRadioOptionClick(value) {
       this.selectedValue = value;
       if (this.callback) {
-        this.callback(radioOption, value);
+        this.callback(value);
       }
     },
   },
@@ -88,6 +82,7 @@ export default defineComponent({
   background-color: transparent;
   cursor: pointer;
   border: 1px solid #ccc;
+  position: relative;
 }
 
 .radio-button-group .radio-button:not(:first-of-type) label {
@@ -108,5 +103,24 @@ export default defineComponent({
 
 .radio-button-group input[type="radio"]:hover + label {
   background-color: rgba(0, 0, 0, 0.04);
+}
+
+.tool-tip {
+  background-color: rgba(97, 97, 97, 0.92);
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  font-size: 12px;
+  padding: 4px 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -30px;
+  font-weight: 500;
+}
+
+.radio-button-group .radio-button label:hover .tool-tip {
+  visibility: visible;
 }
 </style>

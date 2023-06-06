@@ -7,30 +7,26 @@ import { Component, Input } from "@angular/core";
   selector: "radio-component, RadioComponent",
   template: `
     <div class="radio-button-group">
-      <ng-container *ngFor="let optionGroup of radioOptions">
-        <div [attr.key]="optionGroup.groupName">
-          <h3>{{optionGroup.groupName}}</h3>
+      <ng-container *ngFor="let option of radioOptions[0].options">
+        <div class="radio-button">
+          <input
+            type="radio"
+            [attr.name]="option.value"
+            [attr.value]="option.value"
+            [attr.id]="option.value"
+            [attr.checked]="selectedValue === option.value"
+            (click)="handleRadioOptionClick(option.value)"
+          />
 
-          <ng-container *ngFor="let option of optionGroup.options">
-            <div class="radio-button">
-              <input
-                type="radio"
-                [attr.name]="optionGroup.groupName"
-                [attr.value]="option.value"
-                [attr.id]="option.value"
-                [attr.checked]="selectedValue === option.value"
-                (click)="handleRadioOptionClick(optionGroup.groupName, option.value)"
-              />
+          <label [attr.for]="option.value">
+            <span>
+              <ng-container *ngIf='option.icon != "" && option.icon != null'>
+                <DbIcon [icon]="option.icon"></DbIcon>
 
-              <label [attr.for]="option.value">
-                <span>
-                  <DbIcon [icon]="radioIcons[option.value]"></DbIcon>
-
-                  {{option.label}}
-                </span>
-              </label>
-            </div>
-          </ng-container>
+                <span class="tool-tip">{{option.description}}</span>
+              </ng-container>
+            </span>
+          </label>
         </div>
       </ng-container>
     </div>
@@ -63,6 +59,7 @@ import { Component, Input } from "@angular/core";
         background-color: transparent;
         cursor: pointer;
         border: 1px solid #ccc;
+        position: relative;
       }
 
       .radio-button-group .radio-button:not(:first-of-type) label {
@@ -84,25 +81,39 @@ import { Component, Input } from "@angular/core";
       .radio-button-group input[type="radio"]:hover + label {
         background-color: rgba(0, 0, 0, 0.04);
       }
+
+      .tool-tip {
+        background-color: rgba(97, 97, 97, 0.92);
+        border-radius: 4px;
+        color: rgb(255, 255, 255);
+        visibility: hidden;
+        position: absolute;
+        z-index: 1;
+        font-size: 12px;
+        padding: 4px 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -30px;
+        font-weight: 500;
+      }
+
+      .radio-button-group .radio-button label:hover .tool-tip {
+        visibility: visible;
+      }
     `,
   ],
 })
 export class RadioComponent {
   @Input() radioOptions: any;
-  @Input() radioIcons: any;
-  @Input() radioDescriptions: any;
   @Input() callback: any;
 
   radioOptions = this.radioOptions;
-  radioIcons = this.radioIcons;
-  radioDescriptions = this.radioDescriptions;
   selectedValue = "";
   callback = this.callback;
-  handleRadioOptionClick(radioOption: string, value: string) {
-    console.log("Test");
+  handleRadioOptionClick(value: string) {
     this.selectedValue = value;
     if (this.callback) {
-      this.callback(radioOption, value);
+      this.callback(value);
     }
   }
 }

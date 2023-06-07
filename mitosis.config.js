@@ -3,11 +3,17 @@ module.exports = {
     files: 'src/**',
     targets: ['vue3', 'react', 'angular'],
     options: {
+        prettier: true,
         react: {
-            stateType: "mobx"
+            stateType: "mobx",
+            prettier: true,
         },
         angular: {
-            typescript: true
+            typescript: true,
+            prettier: true,
+        },
+        vue3: {
+            prettier: true,
         }
     },
     plugins: ['@builder.io/mitosis'],

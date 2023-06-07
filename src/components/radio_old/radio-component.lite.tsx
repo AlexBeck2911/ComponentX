@@ -1,9 +1,7 @@
 import { For, onInit, Show, useStore, useStyle } from "@builder.io/mitosis";
 
 export default function RadioComponent(props: any) {
-  // Verwendung des useStore-Hooks, um den Zustand zu initialisieren
   const state = useStore({
-    // Übernahme der Props in den Zustand
     radioOptions: props.radioOptions,
     selectedValue: "",
     callback: props.callback,
@@ -11,15 +9,12 @@ export default function RadioComponent(props: any) {
     radioPadding: "",
     iconVariant: "",
     fontSize: "",
-    // Funktion zum Behandeln des Klicks auf eine Radio-Option
     handleRadioOptionClick(value: string) {
       state.selectedValue = value;
-      // Aufruf des Callbacks, wenn vorhanden
       if (state.callback) {
         state.callback(value);
       }
     },
-    // Funktion zum Ermitteln der Größenabhängigen Werte
     getSizes() {
       if (state.size === "small") {
         state.radioPadding = "4px 8px";
@@ -37,13 +32,10 @@ export default function RadioComponent(props: any) {
     },
   });
 
-  // onInit-Hook, der aufgerufen wird, wenn die Komponente initialisiert wird
   onInit(() => {
-    // Ermittlung der Größenabhängigen Werte beim Initialisieren
     state.getSizes();
   });
 
-  // Verwendung des useStyle-Hooks, um Stile einzufügen
   useStyle(`
   .radio-button-group {
     display: flex;
@@ -116,11 +108,9 @@ export default function RadioComponent(props: any) {
 
   return (
     <div className="radio-button-group">
-      {/* Iteration über die Radio-Optionen */}
       <For each={state.radioOptions[0].options}>
         {(option: any) => (
           <div className="radio-button">
-            {/* Radio-Button-Element */}
             <input
               type="radio"
               name={option.value}
@@ -129,7 +119,6 @@ export default function RadioComponent(props: any) {
               checked={state.selectedValue === option.value}
               onClick={() => state.handleRadioOptionClick(option.value)}
             />
-            {/* Label für den Radio-Button */}
             <label
               htmlFor={option.value}
               style={{
@@ -137,22 +126,18 @@ export default function RadioComponent(props: any) {
               }}
             >
               <span>
-                {/* Show-Komponente zur bedingten Anzeige */}
                 <Show
                   when={option.icon != "" && option.icon != null}
                   else={
-                    // Anzeige, wenn kein Icon vorhanden ist
                     <span style={{ fontSize: state.fontSize }}>
                       {option.description}
                     </span>
                   }
                 >
-                  {/* DB-Icon-Komponente */}
                   <DbIcon
                     icon={option.icon}
                     variant={state.iconVariant}
                   ></DbIcon>
-                  {/* Tooltip für das Icon */}
                   <span className={"tool-tip"}>{option.description}</span>
                 </Show>
               </span>

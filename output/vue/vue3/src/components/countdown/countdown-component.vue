@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -31,12 +31,12 @@ export default defineComponent({
   },
 
   methods: {
-    formatTime(time) {
+    formatTime(time: number) {
       const minutes = Math.floor(time / 60);
       const seconds = time % 60;
       return `${this.padDigits(minutes)}:${this.padDigits(seconds)}`;
     },
-    padDigits(number) {
+    padDigits(number: number) {
       return number.toString().padStart(2, "0");
     },
     start() {

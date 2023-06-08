@@ -6,6 +6,7 @@ module.exports = {
         prettier: true,
         react: {
             stateType: "mobx",
+            stylesType: "styled-jsx",
             prettier: true,
         },
         angular: {
@@ -14,6 +15,7 @@ module.exports = {
         },
         vue3: {
             prettier: true,
+            typescript: true,
         }
     },
     plugins: ['@builder.io/mitosis'],

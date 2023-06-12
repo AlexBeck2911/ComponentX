@@ -1,40 +1,34 @@
-import { onInit, Show, useContext, useStore, useStyle } from "@builder.io/mitosis";
-import RadioContext from "./radio.context.lite";
+import { useContext, onInit, Show, useStore, useStyle } from "@builder.io/mitosis";
 import { RadioOptionProps } from "./radio.props";
+import radioStore from "./radio.context.lite";
 
 export default function RadioOption(props: RadioOptionProps) {
-
-  const radioGroup = useContext(RadioContext);
+  const radioContext = useContext(radioStore)
 
   const state = useStore({
-    value: props.value,
-    label: props.label,
-    disabled: props.disabled,
     radioPadding: "",
-    noToolTip: props.noToolTip,
-    radioGroupProps: {size: "", selectedValue: "", callback: (value: string) => {}},
+    radio: {size: "", name: "", callback: ((value: any) => {})},
     getSizes() {
-      if (state.radioGroupProps.size === "small") {
+      if (state.radio.size === "small") {
         state.radioPadding = "4px 8px";
-      } else if (state.radioGroupProps.size === "large") {
+      } else if (state.radio.size === "large") {
         state.radioPadding = "12px 24px";
       } else {
         state.radioPadding = "8px 16px";
       }
     },
     handleRadioOptionClick(value: string) {
-      state.radioGroupProps.selectedValue = value;
-      if (state.radioGroupProps.callback) {
-        state.radioGroupProps.callback(state.radioGroupProps.selectedValue);
+      if (state.radio.callback) {
+        state.radio.callback(value);
       }
     },
     init() {
-      state.radioGroupProps = radioGroup
       state.getSizes();
     }
   });
 
   onInit(() => {
+    state.radio = radioContext
     state.init()
   })
 
@@ -103,14 +97,12 @@ export default function RadioOption(props: RadioOptionProps) {
   `)
 
   return (
-
     <div className="radio-button">
       <input
         type="radio"
-        name={props.value}
+        name={state.radio.name}
         value={props.value}
         id={props.value}
-        checked={state.radioGroupProps.selectedValue === props.value}
         onChange={() => state.handleRadioOptionClick(props.value!)}
         disabled={props.disabled}
       />
@@ -119,7 +111,7 @@ export default function RadioOption(props: RadioOptionProps) {
       }}>
         <span>
           {props.children}
-          <Show when={!state.noToolTip}>
+          <Show when={!props.noToolTip}>
             <Show when={props.label != null}
                   else={<span className={"tool-tip"}>{props.value}</span>}>
               <span className={"tool-tip"}>{props.label}</span>

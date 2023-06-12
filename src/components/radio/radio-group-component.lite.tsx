@@ -1,13 +1,13 @@
-import { onInit, useStyle } from "@builder.io/mitosis";
-import radioStore from "./radio-state";
+import { onInit, useStyle, setContext } from "@builder.io/mitosis";
+import radioStore from "./radio.context.lite";
 
 
 export default function RadioGroup(props: any) {
 
-  onInit(() => {
-    radioStore.size = props.size;
-    radioStore.name = props.name;
-    radioStore.callback = props.callback;
+  setContext(radioStore, {
+    size: props.size,
+    name: props.name,
+    callback: props.callback,
   })
 
   useStyle(`

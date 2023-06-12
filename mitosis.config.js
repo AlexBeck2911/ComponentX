@@ -5,7 +5,7 @@ module.exports = {
     options: {
         prettier: true,
         react: {
-            stateType: "mobx",
+            stateType: "useState",
             stylesType: "styled-jsx",
             prettier: true,
         },

@@ -1,74 +1,74 @@
 import * as React from "react";
-import { useEffect } from "react";
-import { useLocalObservable, observer } from "mobx-react-lite";
+import { useState, useEffect } from "react";
 
 function CountdownComponent(props) {
-  const state = useLocalObservable(() => ({
-    timerId: null,
-    startTime: 0,
-    currentTime: 0,
-    formatTime(time) {
-      const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
-      return `${this.padDigits(minutes)}:${this.padDigits(seconds)}`;
-    },
-    padDigits(number) {
-      return number.toString().padStart(2, "0");
-    },
-    start() {
-      if (!state.timerId) {
-        if (state.currentTime === 0) {
-          state.currentTime = state.startTime;
-        }
-        state.timerId = setInterval(() => {
-          state.currentTime = state.currentTime - 1;
-          if (state.currentTime === 0) {
-            this.stop();
+  const [timerId, setTimerId] = useState(() => null);
+
+  const [startTime, setStartTime] = useState(() => 0);
+
+  const [currentTime, setCurrentTime] = useState(() => 0);
+
+  function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${padDigits(minutes)}:${padDigits(seconds)}`;
+  }
+
+  function padDigits(number) {
+    return number.toString().padStart(2, "0");
+  }
+
+  function start() {
+    if (!timerId) {
+      if (currentTime === 0) {
+        setCurrentTime(startTime);
+      }
+      setTimerId(
+        setInterval(() => {
+          setCurrentTime(currentTime - 1);
+          if (currentTime === 0) {
+            stop();
             alert("Der Countdown ist abgelaufen!");
           }
-        }, 1000);
-      }
-    },
-    stop() {
-      if (state.timerId) {
-        clearInterval(state.timerId);
-        state.timerId = null;
-      }
-    },
-    reset() {
-      state.stop();
-      state.currentTime = state.startTime;
-    },
-  }));
+        }, 1000)
+      );
+    }
+  }
+
+  function stop() {
+    if (timerId) {
+      clearInterval(timerId);
+      setTimerId(null);
+    }
+  }
+
+  function reset() {
+    stop();
+    setCurrentTime(startTime);
+  }
 
   useEffect(() => {
-    state.startTime = props.startTimeCountdown;
-    state.currentTime = state.startTime;
+    setStartTime(props.startTimeCountdown);
+    setCurrentTime(startTime);
   }, []);
 
   return (
     <>
       <div>
         <div className="align-items-center d-flex justify-content-center timeDisplayContainer">
-          <span id="timeDisplay">{state.formatTime(state.currentTime)}</span>
+          <span id="timeDisplay">{formatTime(currentTime)}</span>
         </div>
 
         <div>
-          <button
-            className="btn btn-success"
-            onClick={(event) => state.start()}
-          >
+          <button className="btn btn-success" onClick={(event) => start()}>
             Start
           </button>
 
-          <button
-            className="btn btn-warning"
-            onClick={(event) => state.reset()}
-          >
+          <button className="btn btn-warning" onClick={(event) => reset()}>
             Reset
           </button>
 
-          <button className="btn btn-danger" onClick={(event) => state.stop()}>
+          <button className="btn btn-danger" onClick={(event) => stop()}>
             Stop
           </button>
         </div>
@@ -86,5 +86,4 @@ function CountdownComponent(props) {
   );
 }
 
-const observedCountdownComponent = observer(CountdownComponent);
-export default observedCountdownComponent;
+export default CountdownComponent;

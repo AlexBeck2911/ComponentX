@@ -1,12 +1,14 @@
-import { setContext, useStore, useStyle } from "@builder.io/mitosis";
-import Context from "./radio.context.lite";
+import { onInit, useStyle } from "@builder.io/mitosis";
+import radioStore from "./radio-state";
 
 
 export default function RadioGroup(props: any) {
-  const state = useStore({
-    size: props.size || "medium",
-    callback: props.callback,
-  });
+
+  onInit(() => {
+    radioStore.size = props.size;
+    radioStore.name = props.name;
+    radioStore.callback = props.callback;
+  })
 
   useStyle(`
   .radio-button-group {
@@ -14,10 +16,7 @@ export default function RadioGroup(props: any) {
   }
   `)
 
-  setContext(Context, {
-    size: state.size,
-    callback: props.callback,
-  });
-
-  return <div className="radio-button-group">{props.children}</div>;
+  return <fieldset className="radio-button-group">
+    {props.children}
+  </fieldset>;
 }

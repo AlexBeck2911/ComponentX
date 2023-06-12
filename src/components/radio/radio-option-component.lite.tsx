@@ -1,4 +1,4 @@
-import { useContext, onInit, Show, useStore, useStyle } from "@builder.io/mitosis";
+import { useContext, onInit, Show, useStore, useStyle, setContext } from "@builder.io/mitosis";
 import { RadioOptionProps } from "./radio.props";
 import radioStore from "./radio.context.lite";
 
@@ -7,7 +7,7 @@ export default function RadioOption(props: RadioOptionProps) {
 
   const state = useStore({
     radioPadding: "",
-    radio: {size: "", name: "", callback: ((value: any) => {})},
+    radio: {size: "", name: "", multiple: false, selectedValues: new Set<any>(), callback: ((value: any) => {})},
     getSizes() {
       if (state.radio.size === "small") {
         state.radioPadding = "4px 8px";
@@ -20,6 +20,17 @@ export default function RadioOption(props: RadioOptionProps) {
     handleRadioOptionClick(value: string) {
       if (state.radio.callback) {
         state.radio.callback(value);
+      }
+    },
+    handleCheckBoxOptionClick(value: string) {
+      if (state.radio.selectedValues.has(value)) {
+        state.radio.selectedValues.delete(value);
+      } else {
+        state.radio.selectedValues.add(value);
+      }
+
+      if (state.radio.callback) {
+        state.radio.callback(state.radio.selectedValues);
       }
     },
     init() {
@@ -37,7 +48,7 @@ export default function RadioOption(props: RadioOptionProps) {
     display: inline-block;
   }
   
-  .radio-button input[type="radio"] {
+  .radio-button input {
     display: none;
   }
   
@@ -62,15 +73,15 @@ export default function RadioOption(props: RadioOptionProps) {
     border-radius: 0 4px 4px 0;
   }
   
-  .radio-button input[type="radio"]:checked + label {
+  .radio-button input:checked + label {
     background-color: rgba(0, 0, 0, 0.08);
   }
   
-  .radio-button input[type="radio"]:hover + label {
+  .radio-button input:hover + label {
     background-color: rgba(0, 0, 0, 0.04);
   }
   
-  .radio-button input[type="radio"]:disabled + label {
+  .radio-button input:disabled + label {
     color: rgba(0, 0, 0, 0.26);
     pointer-events: none;
     cursor: default;
@@ -98,14 +109,24 @@ export default function RadioOption(props: RadioOptionProps) {
 
   return (
     <div className="radio-button">
-      <input
-        type="radio"
-        name={state.radio.name}
-        value={props.value}
-        id={props.value}
-        onChange={() => state.handleRadioOptionClick(props.value!)}
-        disabled={props.disabled}
-      />
+      <Show when={state.radio.multiple} else={
+        <input
+          type="radio"
+          name={state.radio.name}
+          value={props.value}
+          id={props.value}
+          onChange={() => state.handleRadioOptionClick(props.value!)}
+          disabled={props.disabled}
+      />}>
+        <input
+          type="checkbox"
+          name={state.radio.name}
+          value={props.value}
+          id={props.value}
+          onChange={() => state.handleCheckBoxOptionClick(props.value!)}
+          disabled={props.disabled}
+        />
+      </Show>
       <label htmlFor={props.value} style={{
         padding: state.radioPadding,
       }}>

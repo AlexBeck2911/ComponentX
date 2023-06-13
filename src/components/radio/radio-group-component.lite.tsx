@@ -1,6 +1,6 @@
 import { setContext, useStyle } from "@builder.io/mitosis";
 import radioStore from "./radio.context.lite";
-import { RadioGroupProps } from "./radio.props";
+import { RadioGroupProps } from "./radio.model";
 
 /**
  * Creates a RadioGroup component.

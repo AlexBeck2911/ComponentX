@@ -1,5 +1,5 @@
 import { useContext, onInit, Show, useStore, useStyle } from "@builder.io/mitosis";
-import { RadioOptionProps } from "./radio.props";
+import { RadioOptionProps } from "./radio.model";
 import radioStore from "./radio.context.lite";
 
 /**

@@ -62,7 +62,7 @@ import RadioGroupComponent from "@alexbeck2911/componentx/output/react/src/compo
 import RadioOptionComponent from "@alexbeck2911/componentx/output/react/src/components/radio/radio-option-component.jsx";
 ```
 2. Create a React component and use the RadioGroup and RadioOption components within it:
-```ecmascript 6
+```tsx
 <RadioGroupComponent size="small" callback={handleClick} name="exampleReact">
   <RadioOptionComponent value="night" label={"Night"}>Night</RadioOptionComponent>
   <RadioOptionComponent value="day" label={"Day"}>Day</RadioOptionComponent>

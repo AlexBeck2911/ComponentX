@@ -2,13 +2,15 @@
 
 The Radio component in ComponentX is a fundamental UI element that allows 
 users to select a single option from a set of mutually exclusive choices. 
-It is composed of two main parts: the Radio Group and the Radio Option.
+It is composed of two main parts: the [Radio Group](#radio-group) and the [Radio Option](#radio-option).
 
 ## Radio Group
 
 The Radio Group component is responsible for managing a group of 
 radio options and handling the selection state. It provides a container 
 for the radio options and facilitates communication between them.
+
+![Radio Component](radio.gif)
 
 ### Props
 

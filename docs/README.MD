@@ -1,5 +1,5 @@
 # ComponentX documentation
 
 ## 📜 List of components
-- [Radio](components/radio.md)
-- [Countdown](components/radio.md)
+- [Radio](components/radio/radio.md)
+- [Countdown](components/countdown/countdown.md)

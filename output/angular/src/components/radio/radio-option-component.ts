@@ -2,7 +2,7 @@ import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import { RadioOptionProps } from "./radio.model";
-import radioStore from "./radio.context.js";
+import radioContext from "./radio.context.js";
 
 @Component({
   selector: "radio-option, RadioOption",
@@ -147,8 +147,8 @@ export class RadioOption {
     this.getSizes();
   }
 
-  constructor(public radioContext: radioStore) {
-    this.radio = this.radioContext;
+  constructor(public radioContextState: radioContext) {
+    this.radio = this.radioContextState;
     this.init();
   }
 }

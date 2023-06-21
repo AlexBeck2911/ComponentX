@@ -1,7 +1,7 @@
 {
-  "name": "mitosis",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@alexbeck2911/componentx",
+  "version": "0.1.0",
+  "description": "ComponentX is a versatile library that aims to simplify \r the development process by providing a unified solution for \r creating components across multiple projects and frameworks. \r With ComponentX, you no longer have to repeat the same work \r for each project and framework, saving you time and effort.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -10,8 +10,8 @@
     "start": "watch 'yarn run mitosis' ./src ./overrides"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "AlexBeck2911",
+  "license": "MIT",
   "dependencies": {
     "@builder.io/mitosis": "^0.0.103",
     "@builder.io/mitosis-cli": "^0.0.61",
@@ -49,5 +49,17 @@
     "vue": "^3.3.4",
     "vue-loader": "^17.2.2",
     "vue-template-compiler": "^2.7.14"
-  }
+  },
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexBeck2911/ComponentX.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexBeck2911/ComponentX/issues"
+  },
+  "homepage": "https://github.com/AlexBeck2911/ComponentX#readme"
 }

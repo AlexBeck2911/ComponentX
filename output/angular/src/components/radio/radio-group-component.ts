@@ -1,19 +1,19 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import radioStore from "./radio.context.js";
+import radioContext from "./radio.context.js";
 import { RadioGroupProps } from "./radio.model";
 
 @Component({
   selector: "radio-group, RadioGroup",
   template: `
-    <fieldset class="radio-button-group">
+    <fieldset class="radio-options-group">
       <ng-content></ng-content>
     </fieldset>
   `,
   styles: [
     `
-      .radio-button-group {
+      .radio-options-group {
         display: flex;
       }
     `,

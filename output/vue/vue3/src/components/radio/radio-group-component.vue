@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="radio-button-group">
+  <fieldset class="radio-options-group">
     <slot />
   </fieldset>
 </template>
@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import radioStore from "./radio.context.js";
+import radioContext from "./radio.context.js";
 import { RadioGroupProps } from "./radio.model";
 
 export default defineComponent({
@@ -18,7 +18,7 @@ export default defineComponent({
   provide() {
     const _this = this;
     return {
-      [radioStore.key]: {
+      [radioContext.key]: {
         size: _this.size,
         name: _this.name,
         multiple: _this.multiple || false,
@@ -31,7 +31,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.radio-button-group {
+.radio-options-group {
   display: flex;
 }
 </style>

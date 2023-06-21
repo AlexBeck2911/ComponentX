@@ -9,7 +9,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "components"
+    "baseUrl": ".",
+    "paths": {
+      "@alexbeck2911/componentx/*": ["components/*"]
+    }
   },
   "exclude": [
     "node_modules"

@@ -19,9 +19,8 @@ To use ComponentX in your project, you can install it via npm:
 #### `npm install componentx`
 
 ### 📗 Documentation
-To start using the reusable components please check out our
-list of components. There you'll receive an explanation on
-how to use that component in your desired framework.
+To start using the reusable components please check out [the documentation](docs/README.MD). There you'll receive an explanation on
+how to use our components in your desired frameworks.
 
 ### 📃 License
 

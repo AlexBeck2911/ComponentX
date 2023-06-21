@@ -1,0 +1,4 @@
+
+        // Noop file
+        export default {};
+      

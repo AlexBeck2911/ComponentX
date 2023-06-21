@@ -49,7 +49,7 @@
 import { defineComponent } from "vue";
 
 import { RadioOptionProps } from "./radio.model";
-import radioContext from "./radio.context.js";
+import radioStore from "./radio.context.js";
 
 export default defineComponent({
   name: "radio-option",
@@ -70,10 +70,10 @@ export default defineComponent({
   },
 
   inject: {
-    radioContextState: radioContext.key,
+    radioContext: radioStore.key,
   },
   created() {
-    this.radio = this.radioContextState;
+    this.radio = this.radioContext;
     this.init();
   },
 

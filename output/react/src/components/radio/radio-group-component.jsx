@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useContext } from "react";
-import radioContext from "./radio.context.js";
+import radioStore from "./radio.context.js";
 
 function RadioGroup(props) {
   return (
     <>
-      <radioContext.Provider
+      <radioStore.Provider
         value={{
           size: props.size,
           name: props.name,
@@ -14,10 +14,10 @@ function RadioGroup(props) {
           callback: props.callback,
         }}
       >
-        <fieldset className="radio-options-group">{props.children}</fieldset>
-      </radioContext.Provider>
+        <fieldset className="radio-button-group">{props.children}</fieldset>
+      </radioStore.Provider>
       <style jsx>{`
-        .radio-options-group {
+        .radio-button-group {
           display: flex;
         }
       `}</style>

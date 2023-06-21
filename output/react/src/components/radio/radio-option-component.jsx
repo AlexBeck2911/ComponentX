@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useContext, useEffect } from "react";
-import radioContext from "./radio.context.js";
+import radioStore from "./radio.context.js";
 
 function RadioOption(props) {
   const [radioPadding, setRadioPadding] = useState(() => "");
@@ -44,10 +44,10 @@ function RadioOption(props) {
     getSizes();
   }
 
-  const radioContextState = useContext(radioContext);
+  const radioContext = useContext(radioStore);
 
   useEffect(() => {
-    setRadio(radioContextState);
+    setRadio(radioContext);
     init();
   }, []);
 

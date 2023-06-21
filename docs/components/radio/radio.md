@@ -10,7 +10,7 @@ The Radio Group component is responsible for managing a group of
 radio options and handling the selection state. It provides a container 
 for the radio options and facilitates communication between them.
 
-![Radio Component](radio.gif)
+<img src="radio.gif" alt="radio component"/>
 
 ### Props
 

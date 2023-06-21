@@ -16,7 +16,7 @@ including Vue, React, and Angular.
 ### 📚 Installation
 To use ComponentX in your project, you can install it via npm:
 
-#### `npm install componentx`
+#### `npm install @alexbeck2911/componentx`
 
 ### 📗 Documentation
 To start using the reusable components please check out [the documentation](docs/README.MD). There you'll receive an explanation on

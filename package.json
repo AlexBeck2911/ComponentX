@@ -1,6 +1,6 @@
 {
   "name": "@alexbeck2911/componentx",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "ComponentX is a versatile library that aims to simplify \r the development process by providing a unified solution for \r creating components across multiple projects and frameworks. \r With ComponentX, you no longer have to repeat the same work \r for each project and framework, saving you time and effort.",
   "main": "index.js",
   "scripts": {

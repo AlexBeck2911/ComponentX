@@ -50,7 +50,7 @@ import RadioOption from "@alexbeck2911/componentx/output/vue/vue3/src/components
   <radio-option value="night" label="Night">Night</radio-option>
   <radio-option value="day" label="Day">Day</radio-option>
   <radio-option value="refresh" label="Refresh">Refresh</radio-option>
-  <radio-option value="info" no-tool-tip="true" disabled="true">Info</radio-option> 
+  <radio-option value="info" no-tool-tip=true disabled=true>Info</radio-option> 
 </radio-group>
 ```
 
@@ -64,10 +64,10 @@ import RadioOptionComponent from "@alexbeck2911/componentx/output/react/src/comp
 2. Create a React component and use the RadioGroup and RadioOption components within it:
 ```ecmascript 6
 <RadioGroupComponent size="small" callback={handleClick} name="exampleReact">
-  <RadioOptionComponent value="night" label={"Nacht"}>Nacht</RadioOptionComponent>
-  <RadioOptionComponent value="day" label={"Tag"}>Tag</RadioOptionComponent>
-  <RadioOptionComponent value="refresh" label={"Refresh"}>Tag</RadioOptionComponent>
-  <RadioOptionComponent value="info" noToolTip>Info</RadioOptionComponent>
+  <RadioOptionComponent value="night" label={"Night"}>Night</RadioOptionComponent>
+  <RadioOptionComponent value="day" label={"Day"}>Day</RadioOptionComponent>
+  <RadioOptionComponent value="refresh" label={"Refresh"}>Refresh</RadioOptionComponent>
+  <RadioOptionComponent value="info" noToolTip={true} disabled={true}>Info</RadioOptionComponent>
 </RadioGroupComponent>
 ```
 

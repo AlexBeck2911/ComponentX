@@ -1,7 +1,5 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-
 import { Component, Input } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "countdown-component, CountdownComponent",
@@ -33,6 +31,8 @@ import { Component, Input } from "@angular/core";
       }
     `,
   ],
+  standalone: true,
+  imports: [CommonModule],
 })
 export class CountdownComponent {
   @Input() startTimeCountdown: any;
@@ -78,10 +78,3 @@ export class CountdownComponent {
     this.currentTime = this.startTime;
   }
 }
-
-@NgModule({
-  declarations: [CountdownComponent],
-  imports: [CommonModule],
-  exports: [CountdownComponent],
-})
-export class CountdownComponentModule {}

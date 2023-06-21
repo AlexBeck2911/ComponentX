@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "mitosis": "mitosis build",
     "build": "yarn run mitosis",
     "start": "watch 'yarn run mitosis' ./src ./overrides"
@@ -18,11 +18,36 @@
     "@db-ui/core": "^2.10.2",
     "@db-ui/elements": "^0.24.2",
     "@db-ui/react-elements": "^0.24.2",
+    "babel-core": "^7.0.0-beta.3",
+    "babel-jest": "^29.0.0-next.8",
+    "babel-preset-env": "^7.0.0-beta.3",
+    "jest": "^29.5.0",
     "typescript": "^4.9.5",
-    "watch": "^1.0.2"
+    "watch": "^0.13.0"
   },
   "devDependencies": {
+    "@angular/core": "^16.1.1",
+    "@angular/platform-browser-dynamic": "^16.1.1",
+    "@babel/preset-env": "^7.22.5",
     "@builder.io/eslint-plugin-mitosis": "^0.0.14",
-    "prettier": "2.8.8"
+    "@storybook/addon-essentials": "7.0.22",
+    "@storybook/addon-interactions": "7.0.22",
+    "@storybook/addon-links": "7.0.22",
+    "@storybook/blocks": "7.0.22",
+    "@storybook/testing-library": "0.0.14-next.2",
+    "@storybook/vue3": "7.0.22",
+    "@storybook/vue3-vite": "7.0.22",
+    "@vue/test-utils": "^2.3.2",
+    "@vue/vue3-jest": "^29.2.4",
+    "eslint-plugin-storybook": "^0.6.12",
+    "jest-environment-jsdom": "^29.5.0",
+    "prettier": "2.8.8",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-test-renderer": "^18.2.0",
+    "storybook": "7.0.22",
+    "vue": "^3.3.4",
+    "vue-loader": "^17.2.2",
+    "vue-template-compiler": "^2.7.14"
   }
 }

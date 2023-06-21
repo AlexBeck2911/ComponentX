@@ -1,6 +1,6 @@
 import { useContext, onInit, Show, useStore, useStyle } from "@builder.io/mitosis";
 import { RadioOptionProps } from "./radio.model";
-import radioStore from "./radio.context.lite";
+import radioContext from "./radio.context.lite";
 
 /**
  * Creates a RadioOption component.
@@ -13,7 +13,7 @@ export default function RadioOption(props: RadioOptionProps) {
    * The RadioStore context that holds the state and functions for the RadioOption.
    * @type {Object}
    */
-  const radioContext = useContext(radioStore);
+  const radioContextState = useContext(radioContext);
 
   const state = useStore({
     radioPadding: "",
@@ -56,7 +56,7 @@ export default function RadioOption(props: RadioOptionProps) {
   });
 
   onInit(() => {
-    state.radio = radioContext;
+    state.radio = radioContextState;
     state.init();
   });
 
@@ -154,7 +154,7 @@ export default function RadioOption(props: RadioOptionProps) {
       }}>
       <span>
         {props.children}
-        {/* Show tooltip if noToolTip is false */}
+        {/* Show tooltip if noToolTip is false or not given */}
         <Show when={!props.noToolTip}>
           {/* Show custom label if provided, otherwise show value as tooltip */}
           <Show when={props.label != null} else={

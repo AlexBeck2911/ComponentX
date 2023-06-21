@@ -1,5 +1,5 @@
 import { setContext, useStyle } from "@builder.io/mitosis";
-import radioStore from "./radio.context.lite";
+import radioContext from "./radio.context.lite";
 import { RadioGroupProps } from "./radio.model";
 
 /**
@@ -11,7 +11,7 @@ import { RadioGroupProps } from "./radio.model";
 export default function RadioGroup(props: RadioGroupProps) {
 
   // Initialize the RadioStore context with the provided properties
-  setContext(radioStore, {
+  setContext(radioContext, {
     size: props.size,
     name: props.name,
     multiple: props.multiple || false,
@@ -21,15 +21,17 @@ export default function RadioGroup(props: RadioGroupProps) {
 
   // Apply CSS styles for the RadioGroup
   useStyle(`
-    .radio-button-group {
+    .radio-options-group {
       display: flex;
     }
   `);
 
   // Return the JSX element
   return (
-    <fieldset className="radio-button-group">
+    <fieldset className="radio-options-group">
       {props.children}
     </fieldset>
   );
 }
+
+

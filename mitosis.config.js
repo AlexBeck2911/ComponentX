@@ -1,6 +1,6 @@
 /** @type {import('@builder.io/mitosis').MitosisConfig} */
 module.exports = {
-    files: 'src/**',
+    files: 'src/components/**',
     targets: ['vue3', 'react', 'angular'],
     options: {
         prettier: true,
@@ -12,6 +12,7 @@ module.exports = {
         angular: {
             typescript: true,
             prettier: true,
+            standalone: true
         },
         vue3: {
             prettier: true,
